@@ -1,0 +1,29 @@
+mport java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) throws IOException{
+         BufferedReader bi = new BufferedReader(
+            new InputStreamReader(System.in));
+        String[] str;
+        str = bi.readLine().split(" ");
+        int num[] = new int[str.length];
+        for (int i = 0; i < str.length; i++) {
+            num[i] = Integer.parseInt(str[i]);
+        }   
+        int n = 0 , sum = 0 , j = 0;
+        for(int i = 0 ;i < num.length ; i++){
+            n = num[i];
+            for(j = i + 1 ; j < num.length ; j++){
+                if(n <= num[j]){
+                    break;
+                }
+            }
+            if(j == num.length){
+                sum++;
+            }
+        }
+        System.out.println(sum);
+    }
+}
