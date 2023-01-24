@@ -1,0 +1,68 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+class Result {
+
+    /*
+     * Complete the 'makingAnagrams' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     *  1. STRING s1
+     *  2. STRING s2
+     */
+
+    public static int makingAnagrams(String s1, String s2) {
+        int dup  = 0 , sum = 0 , n = 0, dup2 = 0,count = 0;
+        char c[] = new char[s1.length()];
+        char c1[] = new char[s2.length()];
+        for(int i  = 0; i< s1.length() ; i++){
+            c[i] = s1.charAt(i);
+        }
+         for(int i  = 0; i< s2.length() ; i++){
+            c1[i] = s2.charAt(i);
+        }
+        Arrays.sort(c);
+        Arrays.sort(c1);
+        for(int i = 0 , j = 0; i< c.length && j < c1.length ; i++ ){
+            while( j < c1.length && (int)c[i] > (int)c1[j] ){
+                j++;
+            }
+            if( j < c1.length && c[i] == c1[j]){
+                count = count+2;
+                j++;
+            }
+        }
+        return ((c.length + c1.length)- count);
+
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String s1 = bufferedReader.readLine();
+
+        String s2 = bufferedReader.readLine();
+
+        int result = Result.makingAnagrams(s1, s2);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
