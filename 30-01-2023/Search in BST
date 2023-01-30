@@ -1,0 +1,30 @@
+import java.util.* ;
+import java.io.*; 
+/*
+    Following is the Binary Tree node structure:
+
+	class BinaryTreeNode<T> {
+	    public T data;
+	    public BinaryTreeNode<T> left;
+	    public BinaryTreeNode<T> right;
+
+	    BinaryTreeNode(T data) {
+	        this.data = data;
+	        this.left = null;
+	        this.right = null;
+	    }
+	}
+*/
+
+public class Solution {
+	public static Boolean searchInBST(BinaryTreeNode<Integer> root, int x) {
+		if(root == null){
+			return false;
+		}
+		if(root.data==x)	return true;
+		boolean left = searchInBST(root.left , x);
+		boolean right = searchInBST(root.right , x);
+		if(left == true || right == true)	return true;
+		return false;
+	}
+}
