@@ -1,0 +1,47 @@
+import java.util.* ;
+import java.io.*; 
+/*************************************************************
+    Following is the Binary Tree node structure
+
+	class TreeNode<T> {
+	    public T data;
+	    public TreeNode<T> left;
+	    public TreeNode<T> right;
+
+	    TreeNode(T data) {
+	        this.data = data;
+	        left = null;
+	        right = null;
+	    }
+	}
+
+*************************************************************/
+
+import java.util.ArrayList;
+
+public class Solution {
+	public static ArrayList<Integer> predecessorSuccessor(BinaryTreeNode<Integer> root, int key) {
+		BinaryTreeNode<Integer> root1 = root;
+		int suc = -1;
+		while(root1 != null){
+			if(root1.data <= key)		root1 = root1.right;
+			else{
+				suc = root1.data;
+				root1 = root1.left;
+			}
+		}
+		int pre = -1;
+		root1 = root;
+		while(root1 != null){
+			if(root1.data >= key)	root1 = root1.left;
+			else{
+				pre = root1.data;
+				root1  = root1.right;
+			}
+		}
+		ArrayList<Integer> list  = new ArrayList<>();
+		list.add(pre);
+		list.add(suc);
+		return list;
+	}
+}
