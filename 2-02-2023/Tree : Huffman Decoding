@@ -1,0 +1,35 @@
+/*  
+	class Node
+		public  int frequency; // the frequency of this tree
+    	public  char data;
+    	public  Node left, right;
+    
+*/ 
+
+	void decode(String s, Node root) {
+        int i = 0;
+        Node curr = root;
+        StringBuilder output = new StringBuilder();
+        String o = "0";
+        String l = "1";
+        while(s.length() > i){
+            if((s.substring(i,i+1)).equals(o) && curr != null){
+                curr  = curr.left;
+                if(curr.left == null && curr.right == null && curr!= null){
+                    output.append(curr.data);
+                    curr = root;
+                }
+            }
+            else if(s.substring(i,i+1).equals(l) && curr != null){
+                curr= curr.right;
+                if(curr.left == null && curr.right == null && curr!= null){
+                    output.append(curr.data);
+                    curr = root;
+                }
+            }
+            i++;
+        }
+        System.out.println(output.toString());
+
+       
+    }
