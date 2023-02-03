@@ -1,0 +1,76 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        
+        if(root == null)    return null;
+
+        TreeNode curr = root;
+        TreeNode parent = null;
+        while(curr!= null && curr.val != key){
+            parent = curr;
+            if(curr.val > key)  curr = curr.left;
+            else    curr = curr.right;
+        }
+
+        if(curr != null){
+        if(curr.left != null && curr.right != null){
+            parent = curr;
+            //System.out.println(parent.val + " parent");
+            //System.out.println(curr.left.val + " curr.left , "+ curr.val + " curr ");
+            TreeNode temp = curr.left;
+            //System.out.println(temp.val+ " temp ");
+            while(temp.right != null){
+                parent = temp;
+                temp = temp.right;
+            }
+            int delValue = curr.val;
+            curr.val = temp.val;
+            temp.val = delValue;
+            curr = temp;
+        }
+        /*System.out.println(parent.val+ " parent.val ");
+        System.out.println(parent.left.val + " parent.left .val");
+        System.out.println(curr.val + " curr val");*/
+
+        if(root.val == curr.val){
+            if(curr.left != null)    root = root.left;
+            else root = root.right;
+        }
+       // System.out.println(parent.val + " " + curr.val);
+
+        if((parent != null ) && parent.left == curr){
+            if(curr.left != null )  parent.left = curr.left;
+            else    parent.left  = curr.right; 
+        }
+
+        else if (parent != null && parent.right == curr ){
+            if(curr.left != null) parent.right = curr.left;
+            else    parent.right  = curr.right;
+        }
+        /*if(parent != null && parent.val > curr.val){
+            if(curr.left != null)   parent.left = curr.left;
+            else parent.left = curr.right;
+        }
+        else if(parent != null && curr.val > parent.val){
+            if(curr.left != null)   parent.right = curr.left;
+            else parent.right = curr.right;
+        }*/
+        }
+
+        return root;
+    }
+}
