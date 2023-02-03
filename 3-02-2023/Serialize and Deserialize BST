@@ -1,0 +1,67 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Codec {
+
+    // Encodes a tree to a single string.
+    StringBuilder s = new StringBuilder();
+    public String serialize(TreeNode root) {
+        buildStr(root);
+        System.out.println(s.toString());
+        return s.toString();
+    }
+
+    public void buildStr(TreeNode root){
+        if(root == null)    return ;
+        s = s.append(String.valueOf(root.val));
+        s = s.append("a");
+        buildStr(root.left);
+        buildStr(root.right);
+    }
+
+    // Decodes your encoded data to tree.
+    int count = 0;
+    public TreeNode deserialize(String data) {
+        if(data.length() == 0 ) return null;
+        count = 0;
+        return build(data , Integer.MAX_VALUE);
+    }
+    public TreeNode build(String data , int max){
+        if(data.length()-1 < count)    return null;
+       // System.out.println(data.substring(count , count+1));
+        //System.out.println(data.substring(count , count+1).equals("a"));
+        StringBuilder str = new StringBuilder();
+        int value = -1 , size = 0;
+        while(data.length() > count && (data.charAt(count) != 'a')){
+            str = str.append(data.substring(count , count+1));
+            //System.out.println(str.toString());
+            count++;
+            size++;
+        }
+        //System.out.println(str.toString() + " data ");
+        if(str.length() != 0)  value = Integer.parseInt(str.toString());
+        if(value > max){
+            count= count-size;
+            return null;
+        } 
+        TreeNode root = new TreeNode(value);
+        count++;
+        root.left = build(data , value);
+        root.right = build(data, max);
+        return root;
+
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec ser = new Codec();
+// Codec deser = new Codec();
+// String tree = ser.serialize(root);
+// TreeNode ans = deser.deserialize(tree);
+// return ans;
