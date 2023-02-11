@@ -1,0 +1,24 @@
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        int n = image.length;
+        int m = image[0].length;
+        int[] delrow = {-1 , 0,1,0};
+        int[] delcol = { 0,1,0,-1};
+        boolean Visited[][] = new boolean[n][m];
+        flood(image,sr , sc , n ,m ,color, image[sr][sc],delrow,delcol , Visited);
+        return image;
+    }
+    public void flood(int[][] image , int i , int j , int rows , int cols ,int color, int val,int[] drow ,int[] dcol , boolean[][] Visited){
+        if(i < 0 || i >= rows || j<0 || j >= cols ||image[i][j] != val || Visited[i][j]){
+            return;
+        }
+        Visited[i][j] = true;
+        image[i][j] = color;
+        for(int k= 0 ;k<4;k++){
+            int r = drow[k]+i;
+            int c = dcol[k]+j;
+            flood(image,r,c, rows , cols , color , val , drow, dcol ,Visited);
+        }
+        return;
+    }
+}
