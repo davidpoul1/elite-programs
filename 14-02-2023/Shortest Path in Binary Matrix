@@ -1,0 +1,49 @@
+class Edge {
+    int r;
+    int c;
+    int w;
+    public Edge(int r ,int c , int w){
+        this.r = r;
+        this.c= c;
+        this.w = w;
+    }
+}
+class Solution {
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        int n  = grid.length;
+        if(grid[0][0] == 1 || grid[n-1][n-1] == 1) return -1;
+        if(n == 1)  return 1;
+        Queue<Edge> queue = new LinkedList<>();
+        boolean Visited[][] = new boolean[n][n];
+        queue.add(new Edge(0 , 0 , 1));
+        int weight = Integer.MAX_VALUE;
+        while(!queue.isEmpty()){
+            Edge e = queue.poll();
+            
+            if(!Visited[e.r][e.c]){
+                int I = e.r;
+                int J = e.c;
+                int W = e.w;
+                //System.out.println(I + " i "+ J+ " j " + W+" k ");
+                Visited[I][J] =true;
+                int delrow[] = {-1,-1,0,1,1,1,0,-1};
+                int delcol[] = {0 ,1,1,1,0,-1,-1,-1};
+                for(int i =0;i< 8;i++){
+                    int row = I + delrow[i];
+                    int col = J + delcol[i];
+                    if(row < 0 || row >= n||col < 0 || col >= n||grid[row][col] == 1 )   continue;
+                    //System.out.println(row + " " + col +"  " +  weight + " " + W);
+                    if(row == n-1 && col == n-1) {
+                        if(weight > W +1) weight = W+1;
+                        Visited[row][col] = false;
+                    }
+                    
+                    if(!Visited[row][col])   
+                    queue.add(new Edge(row , col , W+1));
+                }
+            }
+        }
+        if(weight == Integer.MAX_VALUE) weight = -1;
+        return weight;
+    }
+}
